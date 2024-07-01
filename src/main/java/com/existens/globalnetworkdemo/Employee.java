@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Employee {
     private String fullName;
     private int department;
-    private double salary;
+    private static double salary;
     private int id;
     private static int counter = 1;
 
@@ -24,7 +24,7 @@ public class Employee {
         return department;
     }
 
-    public double getSalary() {
+    public static double getSalary() {
         return salary;
     }
 
@@ -64,4 +64,9 @@ public class Employee {
                 Double.compare(employee.salary, salary) == 0 &&
                 Objects.equals(fullName, employee.fullName);
     }
+
+    public static double getSalary(Object o) {
+        return getSalary();
+    }
 }
+

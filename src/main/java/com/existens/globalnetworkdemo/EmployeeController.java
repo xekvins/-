@@ -1,40 +1,32 @@
 package com.existens.globalnetworkdemo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
-@RequestMapping("/departments")
-    public class EmployeeController {
-        private final EmployeeService employeeService;
+@RequestMapping("/employees")
+public class EmployeeController {
+    private final EmployeeService employeeService;
 
-        public EmployeeController(EmployeeService employeeService) {
-            this.employeeService = employeeService;
-        }
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
-        @GetMapping("/max-salary")
-        public Employee getEmployeeWithMaxSalary(@RequestParam int departmentId) {
-            return employeeService.getEmployeeWithMaxSalary(departmentId);
-        }
+    @PostMapping("/add")
+    public Employee addEmployee(@RequestParam String fullName, @RequestParam int department, @RequestParam double salary) {
+        return employeeService.addEmployee(fullName, department, salary);
+    }
 
-        @GetMapping("/min-salary")
-        public Employee getEmployeeWithMinSalary(@RequestParam int departmentId) {
-            return employeeService.getEmployeeWithMinSalary(departmentId);
-        }
+    @DeleteMapping("/remove")
+    public Employee removeEmployee(@RequestParam int id) {
+        return employeeService.removeEmployee(id);
+    }
 
-        @GetMapping("/all")
-        public List<Employee> getEmployeesByDepartment(@RequestParam int departmentId) {
-            return employeeService.getEmployeesByDepartment(departmentId);
-        }
-
-        @GetMapping("/all")
-        public Map<Integer, List<Employee>> getAllEmployeesByDepartments() {
-            return employeeService.getAllEmployeesByDepartments();
-        }
+    @GetMapping("/find")
+    public Employee findEmployee(@RequestParam int id) {
+        return employeeService.findEmployee(id);
+    }
 }
+

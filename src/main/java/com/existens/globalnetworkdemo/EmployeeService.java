@@ -1,14 +1,16 @@
 package com.existens.globalnetworkdemo;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+@Service
 public class EmployeeService {
     private final Map<Integer, Employee> employeeMap = new HashMap<>();
     private static final int MAX_EMPLOYEES = 100;
+    private Collection<Object> allEmployees;
 
     public Employee addEmployee(String fullName, int department, double salary) {
         if (employeeMap.size() >= MAX_EMPLOYEES) {
@@ -38,28 +40,13 @@ public class EmployeeService {
         return employee;
     }
 
-    public Employee getEmployeeWithMaxSalary(int departmentId) {
-        return employeeMap.values().stream()
-                .filter(e -> e.getDepartment() == departmentId)
-                .max(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow(EmployeeNotFoundException::new);
+
+    public Collection<Object> getAllEmployees() {
+        Collection<Object> allEmployees = null;
+        return allEmployees;
     }
 
-    public Employee getEmployeeWithMinSalary(int departmentId) {
-        return employeeMap.values().stream()
-                .filter(e -> e.getDepartment() == departmentId)
-                .min(Comparator.comparingDouble(Employee::getSalary))
-                .orElseThrow(EmployeeNotFoundException::new);
-    }
-
-    public List<Employee> getEmployeesByDepartment(int departmentId) {
-        return employeeMap.values().stream()
-                .filter(e -> e.getDepartment() == departmentId)
-                .collect(Collectors.toList());
-    }
-
-    public Map<Integer, List<Employee>> getAllEmployeesByDepartments() {
-        return employeeMap.values().stream()
-                .collect(Collectors.groupingBy(Employee::getDepartment));
+    public void setAllEmployees(Collection<Object> allEmployees) {
+        this.allEmployees = allEmployees;
     }
 }
